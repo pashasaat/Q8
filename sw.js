@@ -1,5 +1,5 @@
 /* ERSA PWA service worker */
-const CACHE = "ersa-v1";
+const CACHE = "ersa-v2";
 const ASSETS = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", (e) => {
