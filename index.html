@@ -640,6 +640,7 @@ async function loadData(){
   try{
     const r = await fetch(CONFIG.SHEET_API + "?action=products");
     const json = await r.json();
+    if(json.settings && json.settings.usdTry) CONFIG.USD_TRY = Number(json.settings.usdTry) || CONFIG.USD_TRY;
     DATA = json.products.map(p=>({
       ...p,
       priceUSD:Number(p.priceUSD),
