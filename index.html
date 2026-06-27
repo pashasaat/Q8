@@ -4,14 +4,14 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
 <meta name="theme-color" content="#FFFFFF" />
-<title>ERSA · Saat & Gözlük</title>
+<title>Q8 · Saat & Gözlük</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="manifest" href="manifest.json" />
 <style>
 /* ============================================================
-   ERSA — Saat & Gözlük  ·  Sibs görsel dili
+   Q8 — Saat & Gözlük  ·  Sibs görsel dili
    ============================================================ */
 :root{
   --bg:#FFFFFF;
@@ -386,7 +386,7 @@ img{display:block;max-width:100%}
 
 <!-- SPLASH -->
 <div id="splash">
-  <div class="splash-mark">ERSA<sup>®</sup></div>
+  <div class="splash-mark">Q8<sup>®</sup></div>
   <div class="splash-sub">Saat · Gözlük · Orijinal</div>
 </div>
 
@@ -396,7 +396,7 @@ img{display:block;max-width:100%}
   <header class="topbar">
     <div class="topbar-row">
       <div class="brand">
-        <span class="wm">ERSA<sup>®</sup></span>
+        <span class="wm">Q8<sup>®</sup></span>
         <span class="tag">Saat · Gözlük</span>
       </div>
       <div class="curr-toggle" id="currToggle">
@@ -452,7 +452,7 @@ img{display:block;max-width:100%}
       <div class="profile-head">
         <div class="av">E</div>
         <div>
-          <div class="nm">ERSA</div>
+          <div class="nm">Q8</div>
           <div class="sub">Saat & Gözlük · Türkiye / Çin</div>
         </div>
       </div>
@@ -468,7 +468,7 @@ img{display:block;max-width:100%}
       <div class="stat-row"><span>Ödeme</span><span class="v">Havale / EFT · Kapıda</span></div>
     </div>
     <div class="about-card">
-      <p>ERSA, tek tek seçilmiş saat ve gözlükleri doğrudan alıcıyla buluşturan bağımsız bir koleksiyondur. Pazaryeri değil — her parça bizzat kontrol edilir, listelenir ve gönderilir.</p>
+      <p>Q8, tek tek seçilmiş saat ve gözlükleri doğrudan alıcıyla buluşturan bağımsız bir koleksiyondur. Pazaryeri değil — her parça bizzat kontrol edilir, listelenir ve gönderilir.</p>
       <p>Soru, teklif ya da özel istek için doğrudan yazabilirsiniz.</p>
       <p><a href="#" onclick="toast('İletişim entegrasyonu canlıda eklenecek');return false">WhatsApp ile yaz →</a></p>
     </div>
@@ -577,8 +577,8 @@ img{display:block;max-width:100%}
    ============================================================ */
 const CONFIG = {
   USE_MOCK: false,
-  SHEET_API: "https://script.google.com/macros/s/AKfycbztoFeww7_bGPfl59uUdgmQyDHTPaZAjyMjdV40o4A0HcMFOZeKo09RyJ-mJRaIzf9T/exec", // Apps Script /exec URL
-  BRAND: "ERSA",
+  SHEET_API: "https://script.google.com/macros/s/AKfycbyGtD54VUuJkRUeZSuRO8FGF90BGScGIF5gTyIHv8fFukaXuQ0D0cD0pnwzKQ0yMhk/exec", // Apps Script /exec URL
+  BRAND: "Q8",
   USD_TRY: 41.0,          // kur (Sheets'ten de gelebilir)
   WHATSAPP: "",           // ör: 905xxxxxxxxx
   FREE_SHIPPING: true,
@@ -592,8 +592,8 @@ const state = {
   sort:"new",
   filter:{ brand:null, condition:null, max:null, favOnly:false },
   cur:"TRY",
-  favs:new Set(JSON.parse(localStorage.getItem("ersa_favs")||"[]")),
-  cart:JSON.parse(localStorage.getItem("ersa_cart")||"[]"),
+  favs:new Set(JSON.parse(localStorage.getItem("q8_favs")||"[]")),
+  cart:JSON.parse(localStorage.getItem("q8_cart")||"[]"),
   current:null, slide:0,
   tmpSort:"new", tmpFilter:null, tmpOffer:{type:null},
   insurance:false
@@ -711,7 +711,7 @@ function postHTML(p){
       <div class="post-seller">
         <div class="ps-av">E</div>
         <div>
-          <div class="ps-name">ERSA</div>
+          <div class="ps-name">Q8</div>
           <div class="ps-badge">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
             Orijinal · Garantili
@@ -776,7 +776,7 @@ function feedOffer(id){
 }
 function shareItem(id){
   const p = DATA.find(x=>x.id===id);
-  const data = {title:"ERSA · "+(p?p.name:""), text:p?`${p.name} — ${fmt(p.priceUSD)}`:"", url:location.href};
+  const data = {title:"Q8 · "+(p?p.name:""), text:p?`${p.name} — ${fmt(p.priceUSD)}`:"", url:location.href};
   if(navigator.share){ navigator.share(data).catch(()=>{}); }
   else toast("Paylaşım bağlantısı kopyalandı");
 }
@@ -847,7 +847,7 @@ function openDetail(id){
       <div class="ship-row"><span class="k">Gönderim</span><span class="v">${CONFIG.FREE_SHIPPING?"Ücretsiz":"Alıcıya ait"}</span></div>
       <div class="ship-row"><span class="k">Süre</span><span class="v">1–3 iş günü</span></div>
       <div class="ship-row"><span class="k">İade</span><span class="v">3 gün içinde</span></div>
-      <div class="ship-row"><span class="k">ERSA koruması</span><span class="v">ERSA Güvence</span></div>
+      <div class="ship-row"><span class="k">Q8 koruması</span><span class="v">Q8 Güvence</span></div>
     </div>`;
   buildActionBar(p);
   go("detail");
@@ -881,12 +881,12 @@ function backFromDetail(){ go(state.prevView||"shop"); }
 function toggleFav(id,el){
   if(state.favs.has(id)){state.favs.delete(id);el&&el.classList.remove("on");}
   else{state.favs.add(id);el&&el.classList.add("on");}
-  localStorage.setItem("ersa_favs",JSON.stringify([...state.favs]));
+  localStorage.setItem("q8_favs",JSON.stringify([...state.favs]));
   if(state.view==="favs") renderFavs();
 }
 
 /* ---------- SEPET ---------- */
-function saveCart(){ localStorage.setItem("ersa_cart",JSON.stringify(state.cart)); updateCartBadge(); }
+function saveCart(){ localStorage.setItem("q8_cart",JSON.stringify(state.cart)); updateCartBadge(); }
 function addToCart(id){
   if(!state.cart.includes(id)) state.cart.push(id);
   saveCart(); toast("Sepete eklendi"); 
@@ -913,7 +913,7 @@ function renderCart(){
   body.innerHTML = `
     <div class="notice">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 auto"><path d="M20 6L9 17l-5-5"/></svg>
-      <span>Sipariş vererek ERSA satış ve iade koşullarını kabul etmiş olursun.</span>
+      <span>Sipariş vererek Q8 satış ve iade koşullarını kabul etmiş olursun.</span>
     </div>
     <div class="lbl" style="margin-top:20px">Teslimat adresi</div>
     <div class="add-addr" onclick="toast('Adres formu canlıda eklenecek')">
@@ -934,7 +934,7 @@ function renderCart(){
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brass)" stroke-width="1.8" style="flex:0 0 auto"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>
       <div style="flex:1">
         <div style="font-weight:700">Alışverişini güvenceye al</div>
-        <div style="font-size:12.5px;color:var(--muted)">ERSA Güvence · ${fmt(CONFIG.INSURANCE_PRICE_USD)}</div>
+        <div style="font-size:12.5px;color:var(--muted)">Q8 Güvence · ${fmt(CONFIG.INSURANCE_PRICE_USD)}</div>
       </div>
       <div class="toggle ${state.insurance?'on':''}" onclick="toggleIns()"></div>
     </div>

@@ -1,7 +1,7 @@
 {
-  "name": "ERSA · Saat & Gözlük",
-  "short_name": "ERSA",
-  "description": "Seçili saat ve gözlük koleksiyonu — doğrudan ERSA'dan.",
+  "name": "Q8 · Saat & Gözlük",
+  "short_name": "Q8",
+  "description": "Seçili saat ve gözlük koleksiyonu — doğrudan Q8'dan.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
