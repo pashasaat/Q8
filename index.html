@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+<meta name="theme-color" content="#FFFFFF" />
+<title>ERSA · Saat & Gözlük</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="manifest" href="manifest.json" />
+<style>
+/* ============================================================
+   ERSA — Saat & Gözlük  ·  Sibs görsel dili
+   ============================================================ */
+:root{
+  --bg:#FFFFFF;
+  --surface:#F4F4F6;
+  --card:#FFFFFF;
+  --line:#ECECEF;
+  --line-2:#E0E0E5;
+  --ink:#17171A;        /* başlık */
+  --text:#2C2C30;
+  --muted:#8A8A8F;
+  --faint:#B5B5BA;
+  --orange:#FF6A3D;
+  --orange-press:#F25A2C;
+  --red:#F5402C;
+  --grad:linear-gradient(92deg,#FF7A4D 0%,#F24E2A 100%);
+  --green:#1FB85A;
+  --green-bg:#E9F7EE;
+  --black:#0E0E10;
+  --yellow:#F5B301;
+  --radius:18px;
+  --radius-sm:12px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --maxw:520px;
+  --nav-h:72px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
+body{font-family:"Poppins",system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+img{display:block;max-width:100%}
+::selection{background:var(--orange);color:#fff}
+
+#app{max-width:var(--maxw);margin:0 auto;min-height:100dvh;position:relative;background:var(--bg);
+  padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom));}
+
+/* ---------------- SPLASH (siyah, Sibs) ---------------- */
+#splash{position:fixed;inset:0;background:var(--black);z-index:1000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  transition:opacity .5s var(--ease)}
+#splash.hide{opacity:0;pointer-events:none}
+.splash-mark{font-weight:700;font-size:62px;color:#fff;letter-spacing:-.01em;position:relative;line-height:1}
+.splash-mark sup{font-size:18px;font-weight:600;position:absolute;top:6px;right:-22px}
+.splash-sub{color:#fff;font-size:20px;font-weight:700;letter-spacing:.01em}
+.splash-mark{animation:pop .6s var(--ease) both}
+@keyframes pop{from{opacity:0;scale:.9}to{opacity:1;scale:1}}
+
+/* ---------------- TOP BAR ---------------- */
+.topbar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.92);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+  padding-top:env(safe-area-inset-top)}
+.topbar-row{display:flex;align-items:center;justify-content:space-between;padding:13px 18px 9px}
+.brand{display:flex;align-items:baseline;gap:8px}
+.brand .wm{font-weight:700;font-size:23px;letter-spacing:-.01em;color:var(--ink)}
+.brand .wm sup{font-size:9px;font-weight:600;color:var(--muted)}
+.brand .tag{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.curr-toggle{display:flex;background:var(--surface);border-radius:30px;padding:3px}
+.curr-toggle button{padding:6px 12px;color:var(--muted);font-weight:600;font-size:12px;border-radius:30px}
+.curr-toggle button.on{background:var(--orange);color:#fff}
+.icon-btn{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  background:var(--surface);color:var(--ink);position:relative}
+.icon-btn .dot{position:absolute;top:6px;right:7px;width:7px;height:7px;border-radius:50%;background:var(--red)}
+
+.tabs{display:flex;gap:2px;padding:2px 10px 0;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:9px 14px 13px;font-size:16px;font-weight:600;color:var(--muted);position:relative;white-space:nowrap}
+.tab.on{color:var(--orange)}
+
+/* ---------------- VIEWS ---------------- */
+.view{display:none;animation:fade .3s var(--ease)}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;translate:0 6px}to{opacity:1;translate:0 0}}
+.section-head{display:flex;align-items:baseline;justify-content:space-between;margin:20px 18px 12px}
+.section-head h2{margin:0;font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.section-head .count{font-size:13px;color:var(--muted);font-weight:500}
+
+/* promo / recommended card (Sibs) */
+.promo{margin:16px 18px 4px;background:var(--surface);border-radius:var(--radius);padding:22px 18px;text-align:center}
+.promo p{margin:0 0 14px;color:var(--text);font-size:15px;font-weight:500}
+.promo .pbtn{display:inline-block;border:1.5px solid var(--orange);color:var(--orange);font-weight:700;
+  padding:11px 22px;border-radius:30px;font-size:14px}
+.promo .pbtn:active{scale:.97}
+
+/* FEATURED rail */
+.rail{display:flex;gap:13px;overflow-x:auto;padding:2px 18px 6px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.feat-card{min-width:240px;scroll-snap-align:start;border-radius:var(--radius);overflow:hidden;
+  background:var(--card);border:1px solid var(--line)}
+.feat-card .ph{aspect-ratio:4/3;background:var(--surface);object-fit:cover;width:100%}
+.feat-meta{padding:12px 13px 14px}
+.feat-meta .nm{font-size:14px;font-weight:600;line-height:1.25;color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.feat-meta .pr{margin-top:7px;font-weight:700;color:var(--ink);font-size:16px}
+
+/* chips */
+.chips{display:flex;gap:9px;overflow-x:auto;padding:14px 18px 4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{padding:10px 18px;border-radius:30px;border:1.5px solid var(--line-2);color:var(--text);
+  font-size:14px;font-weight:600;white-space:nowrap;background:var(--bg)}
+.chip.on{background:#FFF1EC;color:var(--orange);border-color:var(--orange)}
+
+/* sort/filter row */
+.tool-row{display:flex;gap:11px;padding:12px 18px 2px}
+.tool-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;
+  border:1.5px solid var(--line-2);border-radius:30px;padding:12px;font-size:14px;font-weight:600;color:var(--text);background:var(--bg)}
+.tool-btn.active{border-color:var(--orange);color:var(--orange)}
+.tool-btn svg{width:16px;height:16px}
+
+/* product GRID */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:14px 18px 8px}
+.card{position:relative;animation:cardin .38s var(--ease) both}
+@keyframes cardin{from{opacity:0;translate:0 10px}to{opacity:1;translate:0 0}}
+.card .ph-wrap{position:relative;border-radius:var(--radius);overflow:hidden;background:var(--surface)}
+.card .ph{aspect-ratio:1/1;object-fit:cover;width:100%;transition:scale .5s var(--ease)}
+.card:active .ph{scale:1.03}
+.badge{position:absolute;top:10px;left:10px;background:var(--orange);color:#fff;
+  font-size:11px;font-weight:600;padding:5px 11px;border-radius:20px;letter-spacing:.01em}
+.fav{position:absolute;top:9px;right:9px;width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.85);backdrop-filter:blur(4px);display:grid;place-items:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.fav svg{width:18px;height:18px;fill:none;stroke:#54545A;stroke-width:1.9}
+.fav.on svg{fill:var(--orange);stroke:var(--orange)}
+.card .info{padding:11px 2px 2px}
+.card .cond{font-size:12px;letter-spacing:.01em;color:var(--orange);font-weight:600}
+.card .nm{margin:4px 0 0;font-size:14px;font-weight:500;line-height:1.3;color:var(--ink);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:37px}
+.card .pr{margin-top:6px;font-weight:700;font-size:16px;color:var(--ink)}
+.card .brand-line{font-size:12px;color:var(--muted);margin-top:2px}
+
+.empty{text-align:center;color:var(--muted);padding:56px 30px;font-size:14px}
+.empty b{display:block;color:var(--ink);font-size:17px;font-weight:700;margin-bottom:6px}
+
+/* ---------------- DETAIL ---------------- */
+.detail-hero{position:relative;background:var(--surface)}
+.detail-img{aspect-ratio:1/1;object-fit:cover;width:100%}
+.detail-back,.detail-top-actions{position:absolute;top:calc(env(safe-area-inset-top) + 12px);z-index:5}
+.detail-back{left:14px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);
+  display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.12);color:var(--ink)}
+.detail-top-actions{right:14px;display:flex;gap:9px}
+.detail-top-actions .icon-btn{background:rgba(255,255,255,.9);box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.dots{position:absolute;bottom:14px;left:0;right:0;display:flex;gap:6px;justify-content:center}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.6);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.dots i.on{background:var(--orange);width:22px;border-radius:4px}
+.detail-body{padding:20px 18px 10px}
+.price-row{display:flex;align-items:center;justify-content:space-between}
+.big-price{font-weight:700;font-size:28px;color:var(--ink)}
+.price-row .fav{position:static;background:var(--surface);box-shadow:none;width:42px;height:42px}
+.detail-title{margin:12px 0 2px;font-size:21px;font-weight:600;line-height:1.3;color:var(--ink)}
+.brand-pill{display:inline-flex;align-items:center;gap:6px;margin-top:10px;background:var(--surface);
+  border-radius:30px;padding:7px 14px;font-size:13px;color:var(--muted);font-weight:500}
+.brand-pill b{color:var(--orange);font-weight:700}
+.lbl{font-size:17px;font-weight:700;color:var(--ink);margin:24px 0 12px}
+.cond-opt{display:flex;align-items:center;gap:13px;border:1.5px solid var(--orange);border-radius:var(--radius);
+  padding:12px;background:#FFF6F2}
+.cond-opt .thumb{width:54px;height:54px;border-radius:11px;overflow:hidden;flex:0 0 auto;object-fit:cover}
+.cond-opt .nm{font-weight:700;font-size:15px;color:var(--ink)}
+.cond-opt .meta{font-size:13px;color:var(--muted);margin-top:2px}
+
+.spec-tabs{display:flex;background:var(--surface);border-radius:30px;padding:5px;margin-top:8px}
+.spec-tab{flex:1;padding:11px;border-radius:30px;font-size:14px;font-weight:600;color:var(--muted);text-align:center}
+.spec-tab.on{background:var(--black);color:#fff}
+.spec-panel{padding:18px 2px;display:none}
+.spec-panel.on{display:block;animation:fade .25s var(--ease)}
+.spec-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.spec-grid .k{font-size:12px;color:var(--muted);margin-bottom:4px}
+.spec-grid .v{font-size:14px;color:var(--ink);font-weight:600}
+.spec-grid .v.brass{color:var(--orange)}
+.desc-text{color:var(--text);font-size:14px;line-height:1.6}
+.ship-row{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line);font-size:14px}
+.ship-row .k{color:var(--muted)}
+.ship-row .v{font-weight:600;color:var(--ink)}
+
+/* sales trends (Sibs "No data yet") */
+.nodata{border:1px solid var(--line);border-radius:var(--radius);padding:36px 20px;text-align:center;margin-top:10px}
+.nodata b{display:block;color:var(--ink);font-weight:700;margin-bottom:4px}
+.nodata span{color:var(--muted);font-size:13px}
+
+/* ---------------- STICKY ACTION BAR ---------------- */
+.action-bar{position:fixed;left:0;right:0;bottom:0;z-index:70;max-width:var(--maxw);margin:0 auto;
+  background:rgba(255,255,255,.97);backdrop-filter:blur(16px);border-top:1px solid var(--line);
+  padding:13px 16px calc(13px + env(safe-area-inset-bottom));display:none}
+.action-bar.on{display:block}
+.action-bar .ab-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:11px}
+.action-bar .ab-top .meta{font-size:13px;color:var(--muted);font-weight:500}
+.action-bar .ab-top .pr{font-weight:700;font-size:20px;color:var(--orange)}
+.ab-btns{display:flex;gap:10px}
+.btn{flex:1;padding:14px;border-radius:30px;font-weight:700;font-size:15px;text-align:center;
+  transition:scale .12s var(--ease)}
+.btn:active{scale:.97}
+.btn-ghost{border:1.5px solid var(--line-2);color:var(--ink)}
+.btn-outline{border:1.5px solid var(--orange);color:var(--orange)}
+.btn-solid{background:var(--grad);color:#fff;box-shadow:0 6px 18px rgba(242,78,42,.28)}
+.btn-full{width:100%;flex:none}
+.btn-block{display:block;width:100%;margin-top:10px}
+
+/* ---------------- SHEET ---------------- */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:90;opacity:0;pointer-events:none;
+  transition:opacity .3s var(--ease)}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:100;max-width:var(--maxw);margin:0 auto;background:var(--bg);
+  border-top-left-radius:26px;border-top-right-radius:26px;transform:translateY(102%);
+  transition:transform .36s var(--ease);max-height:88dvh;display:flex;flex-direction:column;
+  box-shadow:0 -10px 40px rgba(0,0,0,.18)}
+.sheet.on{transform:translateY(0)}
+.sheet-grip{width:42px;height:4px;border-radius:3px;background:var(--line-2);margin:11px auto 0}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;padding:16px 22px 6px}
+.sheet-head h3{margin:0;font-size:19px;font-weight:700;color:var(--ink)}
+.sheet-head .reset{color:var(--orange);font-weight:700;font-size:15px}
+.sheet-head .x{font-size:24px;color:var(--muted);line-height:1;padding:4px}
+.sheet-body{padding:6px 22px 20px;overflow-y:auto}
+.sheet-foot{padding:14px 22px calc(18px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+
+.filt-row{display:flex;align-items:center;justify-content:space-between;padding:19px 2px;
+  border-bottom:1px solid var(--line);font-size:17px;font-weight:600;color:var(--ink)}
+.filt-row .chev{color:var(--faint);font-weight:500}
+.opt-row{display:flex;align-items:center;justify-content:space-between;padding:16px 4px;border-bottom:1px solid var(--line)}
+.opt-row .rb{width:23px;height:23px;border-radius:50%;border:2px solid var(--line-2)}
+.opt-row.on .rb{border-color:var(--orange);background:radial-gradient(circle,var(--orange) 0 42%,transparent 46%)}
+.opt-row .label{font-size:16px;color:var(--ink)}
+
+.offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.offer-opt{border:1.5px solid var(--line-2);border-radius:var(--radius);padding:20px 14px;text-align:center}
+.offer-opt.on{border-color:var(--orange);background:#FFF6F2}
+.offer-opt svg{width:26px;height:26px;margin-bottom:9px;stroke:var(--ink);fill:none;stroke-width:1.6}
+.offer-opt.on svg{stroke:var(--orange)}
+.offer-opt .t{font-weight:700;font-size:15px;color:var(--ink)}
+.field{margin-top:16px}
+.field label{display:block;font-size:13px;color:var(--muted);font-weight:600;margin-bottom:8px}
+.field input,.field textarea{width:100%;background:var(--bg);border:1.5px solid var(--line-2);border-radius:12px;
+  padding:13px 14px;color:var(--ink);font-family:inherit;font-size:15px}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--orange)}
+
+/* checkout */
+.co-line{display:flex;gap:13px;padding:14px 0;border-bottom:1px solid var(--line)}
+.co-line .th{width:64px;height:64px;border-radius:12px;overflow:hidden;flex:0 0 auto;object-fit:cover}
+.co-line .nm{font-size:14px;font-weight:600;line-height:1.3;color:var(--ink)}
+.co-line .meta{font-size:12.5px;color:var(--muted);margin-top:3px}
+.co-line .pr{margin-left:auto;font-weight:700;align-self:center;color:var(--ink)}
+.add-addr{border:1.5px dashed var(--line-2);border-radius:var(--radius);padding:22px;background:var(--surface);
+  display:flex;align-items:center;justify-content:center;gap:9px;color:var(--text);font-weight:600}
+.notice{background:var(--green-bg);color:#1A8F47;border-radius:12px;padding:14px;font-size:13.5px;
+  line-height:1.45;display:flex;gap:10px;font-weight:500}
+.notice svg{color:var(--green)}
+.toggle{width:48px;height:28px;border-radius:30px;background:var(--line-2);position:relative;flex:0 0 auto;transition:background .2s}
+.toggle::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;
+  background:#fff;transition:left .2s var(--ease);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle.on{background:var(--orange)}
+.toggle.on::after{left:23px}
+.protect{display:flex;align-items:center;gap:12px;padding:18px 0}
+.total-row{display:flex;align-items:center;justify-content:space-between;padding:16px 0 0}
+.total-row .lbl2{color:var(--muted);font-weight:500}
+.total-row .amt{font-weight:700;font-size:22px;color:var(--orange)}
+
+/* ---------------- NOTIF ---------------- */
+.notif{display:flex;gap:14px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.notif .av{width:48px;height:48px;border-radius:50%;background:var(--black);flex:0 0 auto;display:grid;
+  place-items:center;font-weight:700;color:#fff;font-size:14px}
+.notif .body{font-size:14px;line-height:1.4;color:var(--text)}
+.notif .time{color:var(--faint);font-size:12px;margin-top:5px}
+
+/* ---------------- PROFIL / HAKKINDA (gradient header) ---------------- */
+.prof-grad{background:var(--grad);padding:calc(env(safe-area-inset-top) + 20px) 18px 40px;color:#fff}
+.profile-head{display:flex;align-items:center;gap:16px}
+.profile-head .av{width:78px;height:78px;border-radius:50%;background:rgba(255,255,255,.18);
+  border:2px solid rgba(255,255,255,.5);display:grid;place-items:center;font-weight:700;font-size:30px;color:#fff}
+.profile-head .nm{font-weight:700;font-size:22px}
+.profile-head .sub{font-size:13px;margin-top:3px;opacity:.92}
+.stat-card{margin:-26px 18px 16px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+  background:var(--card);box-shadow:0 8px 24px rgba(0,0,0,.08);position:relative;z-index:2}
+.stat-top{display:flex;text-align:center;padding:18px 0}
+.stat-top .s{flex:1}
+.stat-top .n{font-weight:700;font-size:19px;color:var(--ink)}
+.stat-top .k{color:var(--muted);font-size:12px;margin-top:3px}
+.stat-row{display:flex;justify-content:space-between;padding:15px 18px;border-top:1px solid var(--line);font-size:14px;color:var(--text)}
+.stat-row .v{color:var(--orange);font-weight:600}
+.about-card{margin:8px 18px 18px;border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.about-card p{margin:0 0 12px;color:var(--text);font-size:14px;line-height:1.6}
+.about-card p:last-child{margin:0}
+.about-card a{color:var(--orange);text-decoration:none;font-weight:600}
+
+/* search */
+.search-wrap{padding:14px 18px 4px}
+.search-box{display:flex;align-items:center;gap:10px;background:var(--surface);border-radius:30px;padding:12px 16px}
+.search-box svg{width:18px;height:18px;stroke:var(--muted);fill:none;stroke-width:2}
+.search-box input{flex:1;border:none;background:none;outline:none;font-family:inherit;font-size:15px;color:var(--ink)}
+
+/* ---------------- BOTTOM NAV (siyah) ---------------- */
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;z-index:65;max-width:var(--maxw);margin:0 auto;
+  height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);
+  background:var(--black);display:flex;align-items:center}
+.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:rgba(255,255,255,.55);
+  font-size:10px;font-weight:500;padding-top:6px}
+.nav-item svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9}
+.nav-item.on{color:#fff}
+.nav-cart{margin-top:-24px}
+.nav-cart .bub{width:58px;height:58px;border-radius:50%;background:var(--grad);color:#fff;display:grid;
+  place-items:center;box-shadow:0 8px 22px rgba(242,78,42,.45);position:relative}
+.nav-cart .bub svg{width:26px;height:26px;stroke:#fff;stroke-width:2}
+.cart-count{position:absolute;top:-2px;right:-2px;min-width:20px;height:20px;border-radius:11px;background:#fff;
+  color:var(--red);font-size:11px;font-weight:700;display:grid;place-items:center;padding:0 5px;border:2px solid var(--black)}
+
+/* toast */
+#toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 22px + env(safe-area-inset-bottom));translate:-50% 0;
+  background:var(--ink);color:#fff;font-weight:600;font-size:13.5px;padding:13px 18px;border-radius:30px;z-index:200;
+  opacity:0;pointer-events:none;transition:opacity .25s var(--ease),translate .25s var(--ease);max-width:88%;text-align:center}
+#toast.on{opacity:1;translate:-50% -6px}
+
+/* ============================================================
+   FEED · TikTok/Instagram tarzı tam ekran dikey akış (Öne Çıkanlar)
+   ============================================================ */
+#app.feed-mode{background:#0E0E10;padding-bottom:0}
+#app.feed-mode .topbar{position:fixed;left:0;right:0;top:0;background:transparent;border-bottom:none;
+  background-image:linear-gradient(180deg,rgba(0,0,0,.55),transparent)}
+#app.feed-mode .topbar-row{display:none}
+#app.feed-mode .tabs{padding-top:env(safe-area-inset-top);justify-content:center}
+#app.feed-mode .tab{color:rgba(255,255,255,.7)}
+#app.feed-mode .tab.on{color:var(--orange)}
+#app.feed-mode #view-home{height:100dvh}
+
+.feed{height:100dvh;overflow-y:auto;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch;
+  background:#0E0E10;scrollbar-width:none}
+.feed::-webkit-scrollbar{display:none}
+.post{height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;position:relative;overflow:hidden;background:#0E0E10}
+
+/* yatay görsel galerisi (gönderi içi swipe) */
+.post-media{height:100%;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.post-media::-webkit-scrollbar{display:none}
+.pm-slide{min-width:100%;height:100%;scroll-snap-align:center;background:#16130F;display:grid;place-items:center}
+.pm-slide img{width:100%;height:100%;object-fit:cover}
+
+/* üst başlık (mağaza) */
+.post-top{position:absolute;top:0;left:0;right:0;z-index:4;
+  padding:calc(env(safe-area-inset-top) + 58px) 16px 28px;
+  background:linear-gradient(180deg,rgba(0,0,0,.5),transparent);pointer-events:none}
+.post-seller{display:flex;align-items:center;gap:11px;pointer-events:auto}
+.ps-av{width:42px;height:42px;border-radius:50%;background:#0E0E10;border:1.5px solid rgba(255,255,255,.35);
+  display:grid;place-items:center;font-weight:700;color:#fff;font-size:16px;flex:0 0 auto}
+.ps-name{font-weight:700;font-size:15px;color:#fff;letter-spacing:.01em}
+.ps-badge{font-size:11.5px;font-weight:600;color:#39D27F;margin-top:1px;display:flex;align-items:center;gap:4px}
+
+/* sağ aksiyon çubuğu */
+.post-rail{position:absolute;right:12px;bottom:190px;z-index:5;display:flex;flex-direction:column;gap:22px;align-items:center}
+.rail-btn{display:flex;flex-direction:column;align-items:center;gap:5px;color:#fff}
+.rail-btn svg{width:31px;height:31px;fill:none;stroke:#fff;stroke-width:1.7;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.rail-btn span{font-size:12px;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,.5)}
+.rail-btn.on svg{fill:var(--orange);stroke:var(--orange)}
+.rail-btn:active{scale:.9}
+
+/* alt başlık + dots + CTA */
+.post-bottom{position:absolute;left:0;right:0;bottom:0;z-index:4;
+  padding:0 78px calc(var(--nav-h) + env(safe-area-inset-bottom) + 14px) 16px;
+  background:linear-gradient(0deg,rgba(0,0,0,.82) 35%,transparent)}
+.post-dots{display:flex;gap:6px;margin-bottom:14px}
+.post-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45)}
+.post-dots i.on{background:var(--orange);width:18px;border-radius:4px}
+.pb-cond{font-size:12.5px;font-weight:600;color:var(--orange);letter-spacing:.01em}
+.pb-title{margin:5px 0 0;font-size:17px;font-weight:600;color:#fff;line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.pb-row{display:flex;align-items:center;gap:14px;margin-top:12px}
+.pb-price{font-weight:700;font-size:23px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.pb-cta{background:var(--grad);color:#fff;font-weight:700;font-size:14px;padding:11px 20px;border-radius:30px;
+  box-shadow:0 6px 18px rgba(242,78,42,.4)}
+.pb-cta:active{scale:.96}
+.feed-hint{position:absolute;left:0;right:0;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 4px);
+  text-align:center;color:rgba(255,255,255,.5);font-size:11px;z-index:4;pointer-events:none;animation:hintpulse 2s ease-in-out infinite}
+@keyframes hintpulse{0%,100%{opacity:.4;translate:0 0}50%{opacity:.8;translate:0 -3px}}
+
+@media (max-width:380px){.grid{gap:12px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-mark">ERSA<sup>®</sup></div>
+  <div class="splash-sub">Saat · Gözlük · Orijinal</div>
+</div>
+
+<div id="app" hidden>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-row">
+      <div class="brand">
+        <span class="wm">ERSA<sup>®</sup></span>
+        <span class="tag">Saat · Gözlük</span>
+      </div>
+      <div class="curr-toggle" id="currToggle">
+        <button data-cur="TRY" class="on">₺ TL</button>
+        <button data-cur="USD">$ USD</button>
+      </div>
+    </div>
+    <nav class="tabs" id="tabs">
+      <button class="tab on" data-view="home">Öne Çıkanlar</button>
+      <button class="tab" data-view="shop">Mağaza</button>
+      <button class="tab" data-view="favs">Favoriler</button>
+      <button class="tab" data-view="about">Hakkında</button>
+    </nav>
+  </header>
+
+  <!-- HOME · TikTok/Instagram tarzı tam ekran dikey akış -->
+  <section class="view on" id="view-home">
+    <div class="feed" id="feed"></div>
+  </section>
+
+  <!-- SHOP -->
+  <section class="view" id="view-shop">
+    <div class="chips" id="chips">
+      <button class="chip on" data-cat="all">Tümü</button>
+      <button class="chip" data-cat="saat">⌚ Saat</button>
+      <button class="chip" data-cat="gozluk">🕶 Gözlük</button>
+    </div>
+    <div class="promo">
+      <p>Sana özel öneriler için tercihlerini ekle.</p>
+      <span class="pbtn" onclick="toast('Tercih ekranı canlıda eklenecek')">Tercih ekle</span>
+    </div>
+    <div class="tool-row">
+      <button class="tool-btn" id="sortBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M6 12h12M10 18h4"/></svg>Sırala
+      </button>
+      <button class="tool-btn" id="filterBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18l-7 8v6l-4-2v-4z"/></svg>Filtrele
+      </button>
+    </div>
+    <div class="section-head"><h2 id="shopHead">Tüm Ürünler</h2><span class="count" id="shopCount"></span></div>
+    <div class="grid" id="shopGrid"></div>
+  </section>
+
+  <!-- FAVORILER -->
+  <section class="view" id="view-favs">
+    <div class="section-head" style="margin-top:18px"><h2>Favorilerim</h2><span class="count" id="favCount"></span></div>
+    <div class="grid" id="favGrid"></div>
+  </section>
+
+  <!-- HAKKINDA -->
+  <section class="view" id="view-about">
+    <div class="prof-grad">
+      <div class="profile-head">
+        <div class="av">E</div>
+        <div>
+          <div class="nm">ERSA</div>
+          <div class="sub">Saat & Gözlük · Türkiye / Çin</div>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-top">
+        <div class="s"><div class="n" id="aboutTotal">0</div><div class="k">Ürün</div></div>
+        <div class="s"><div class="n">5.0★</div><div class="k">Puan</div></div>
+        <div class="s"><div class="n">%100</div><div class="k">Orijinal</div></div>
+      </div>
+      <div class="stat-row"><span>Kargo</span><span class="v">Türkiye geneli ücretsiz</span></div>
+      <div class="stat-row"><span>İade</span><span class="v">3 gün içinde</span></div>
+      <div class="stat-row"><span>Ödeme</span><span class="v">Havale / EFT · Kapıda</span></div>
+    </div>
+    <div class="about-card">
+      <p>ERSA, tek tek seçilmiş saat ve gözlükleri doğrudan alıcıyla buluşturan bağımsız bir koleksiyondur. Pazaryeri değil — her parça bizzat kontrol edilir, listelenir ve gönderilir.</p>
+      <p>Soru, teklif ya da özel istek için doğrudan yazabilirsiniz.</p>
+      <p><a href="#" onclick="toast('İletişim entegrasyonu canlıda eklenecek');return false">WhatsApp ile yaz →</a></p>
+    </div>
+  </section>
+
+  <!-- DETAIL -->
+  <section class="view" id="view-detail">
+    <div class="detail-hero">
+      <button class="detail-back" onclick="backFromDetail()" aria-label="Geri">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="detail-top-actions">
+        <button class="icon-btn" onclick="go('cart')" aria-label="Sepet">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M6 6L5 3H2"/></svg>
+        </button>
+      </div>
+      <img class="detail-img" id="detailImg" alt=""/>
+      <div class="dots" id="detailDots"></div>
+    </div>
+    <div class="detail-body" id="detailBody"></div>
+  </section>
+
+  <!-- CART -->
+  <section class="view" id="view-cart">
+    <div class="section-head" style="margin-top:18px"><h2>Sepet & Ödeme</h2></div>
+    <div style="padding:0 18px" id="cartBody"></div>
+  </section>
+
+  <!-- NOTIF -->
+  <section class="view" id="view-notif">
+    <div class="section-head" style="margin-top:18px"><h2>Bildirimler</h2></div>
+    <div id="notifList"></div>
+  </section>
+
+  <!-- SEARCH -->
+  <section class="view" id="view-search">
+    <div class="search-wrap">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+        <input id="searchInput" placeholder="Marka, model ara…" autocomplete="off"/>
+      </div>
+    </div>
+    <div class="grid" id="searchGrid"></div>
+  </section>
+
+  <!-- STICKY ACTION BAR -->
+  <div class="action-bar" id="actionBar"></div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav" id="bottomNav">
+    <button class="nav-item on" data-nav="home">
+      <svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"/></svg>Ana
+    </button>
+    <button class="nav-item" data-nav="search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>Ara
+    </button>
+    <button class="nav-item nav-cart" data-nav="cart">
+      <span class="bub">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M6 6L5 3H2"/></svg>
+        <span class="cart-count" id="cartCount" hidden>0</span>
+      </span>
+    </button>
+    <button class="nav-item" data-nav="notif">
+      <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>Bildirim
+      <span class="dot" style="position:absolute;top:6px;right:calc(50% - 16px);width:8px;height:8px;border-radius:50%;background:var(--red)"></span>
+    </button>
+    <button class="nav-item" data-nav="about">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profil
+    </button>
+  </nav>
+</div>
+
+<!-- SHEETS -->
+<div class="scrim" id="scrim" onclick="closeSheet()"></div>
+
+<div class="sheet" id="sheetSort">
+  <div class="sheet-grip"></div>
+  <div class="sheet-head"><h3>Sırala</h3><button class="x" onclick="closeSheet()">×</button></div>
+  <div class="sheet-body" id="sortBody"></div>
+  <div class="sheet-foot"><button class="btn btn-solid btn-full" onclick="applySort()">Uygula</button></div>
+</div>
+
+<div class="sheet" id="sheetFilter">
+  <div class="sheet-grip"></div>
+  <div class="sheet-head"><h3>Filtrele</h3><button class="reset" onclick="resetFilter()">Sıfırla</button></div>
+  <div class="sheet-body" id="filterBody"></div>
+  <div class="sheet-foot"><button class="btn btn-solid btn-full" id="filterApply" onclick="applyFilter()">Ürünleri gör</button></div>
+</div>
+
+<div class="sheet" id="sheetOffer">
+  <div class="sheet-grip"></div>
+  <div class="sheet-head"><h3>Teklif ver</h3><button class="x" onclick="closeSheet()">×</button></div>
+  <div class="sheet-body" id="offerBody"></div>
+  <div class="sheet-foot"><button class="btn btn-solid btn-full" id="offerSend" onclick="sendOffer()">Teklifi gönder</button></div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+
+/* ============================================================
+   YAPILANDIRMA
+   Google Sheets'e bağlamak için:
+   1) USE_MOCK = false yap
+   2) SHEET_API'ye Apps Script Web App URL'ini yaz
+   ============================================================ */
+const CONFIG = {
+  USE_MOCK: true,
+  SHEET_API: "https://script.google.com/macros/s/XXXXX/exec", // Apps Script /exec URL
+  BRAND: "ERSA",
+  USD_TRY: 41.0,          // kur (Sheets'ten de gelebilir)
+  WHATSAPP: "",           // ör: 905xxxxxxxxx
+  FREE_SHIPPING: true,
+  INSURANCE_PRICE_USD: 5
+};
+
+/* ---------- DURUM ---------- */
+const state = {
+  view:"home", prevView:"home",
+  cat:"all",
+  sort:"new",
+  filter:{ brand:null, condition:null, max:null, favOnly:false },
+  cur:"TRY",
+  favs:new Set(JSON.parse(localStorage.getItem("ersa_favs")||"[]")),
+  cart:JSON.parse(localStorage.getItem("ersa_cart")||"[]"),
+  current:null, slide:0,
+  tmpSort:"new", tmpFilter:null, tmpOffer:{type:null},
+  insurance:false
+};
+
+/* ---------- GÖRSEL (mock için zarif SVG placeholder) ---------- */
+function ph(seed, type){
+  const hues = ["#2a2218","#241f17","#2c2419","#211d15"];
+  const bg = hues[seed % hues.length];
+  const glyph = type==="saat"
+    ? `<circle cx="100" cy="100" r="46" stroke="#C9A24B" stroke-width="2.5"/><circle cx="100" cy="100" r="3" fill="#C9A24B"/><path d="M100 100 L100 68 M100 100 L122 112" stroke="#C9A24B" stroke-width="2.5" stroke-linecap="round"/><path d="M62 100 h-10 M148 100 h10 M100 54 v-10 M100 146 v10" stroke="#6B6457" stroke-width="2"/>`
+    : `<path d="M40 96 a26 26 0 1 0 52 0 a26 26 0 1 0 -52 0 M108 96 a26 26 0 1 0 52 0 a26 26 0 1 0 -52 0" stroke="#C9A24B" stroke-width="2.5" fill="none"/><path d="M92 92 q8 -8 16 0 M40 88 l-14 6 M160 88 l14 6" stroke="#C9A24B" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><rect width='200' height='200' fill='${bg}'/><g opacity='.9'>${glyph}</g></svg>`;
+  return "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
+}
+
+/* ---------- MOCK VERİ ---------- */
+const MOCK = [
+  {id:"w1", type:"saat", brand:"Rolex", model:"Datejust 36", name:"Rolex Datejust 36 Jubilee — Gümüş Kadran", priceUSD:8900, condition:"Çok iyi", listedAt:"2025-06-24", qty:1, images:[0,3,1], specs:{Kasa:"36mm Çelik", Mekanizma:"Otomatik 3235", Yıl:"2021", Kutu:"Tam set"}, desc:"Bizzat kontrol edilmiş, orijinal kutu ve garanti kartı ile. Çizik yok, mekanizma servisli."},
+  {id:"w2", type:"saat", brand:"Omega", model:"Speedmaster", name:"Omega Speedmaster Professional Moonwatch", priceUSD:5400, condition:"İyi", listedAt:"2025-06-24", qty:1, images:[1,2,0], specs:{Kasa:"42mm Çelik", Mekanizma:"Elle kurma 3861", Yıl:"2022", Kutu:"Tam set"}, desc:"Hesalite cam, klasik moonwatch. Hafif kullanım izleri dışında temiz."},
+  {id:"w3", type:"saat", brand:"Tissot", model:"PRX Powermatic", name:"Tissot PRX Powermatic 80 — Mavi", priceUSD:640, condition:"Yeni", listedAt:"2025-06-23", qty:2, images:[2,0,3], specs:{Kasa:"40mm Çelik", Mekanizma:"Powermatic 80", Yıl:"2024", Kutu:"Tam set"}, desc:"Sıfır, açılmamış. Entegre bileklik, mavi guilloché kadran."},
+  {id:"w4", type:"saat", brand:"Maurice Lacroix", model:"Aikon", name:"Maurice Lacroix Aikon Automatic 42mm", priceUSD:1450, condition:"Çok iyi", listedAt:"2025-06-23", qty:1, images:[3,1,2], specs:{Kasa:"42mm Çelik", Mekanizma:"Otomatik ML115", Yıl:"2023", Kutu:"Tam set"}, desc:"Az kullanılmış, koleksiyon parçası. Pençeli bezel tasarımı."},
+  {id:"w5", type:"saat", brand:"Cartier", model:"Tank Must", name:"Cartier Tank Must Large — Quartz", priceUSD:2950, condition:"Çok iyi", listedAt:"2025-06-22", qty:1, images:[0,2,3], specs:{Kasa:"33.7mm Çelik", Mekanizma:"Quartz", Yıl:"2022", Kutu:"Tam set"}, desc:"İkonik dikdörtgen kasa, deri kayış. Orijinal fatura mevcut."},
+  {id:"w6", type:"saat", brand:"Seiko", model:"Presage", name:"Seiko Presage Cocktail Time — Starlight", priceUSD:420, condition:"Yeni", listedAt:"2025-06-22", qty:1, images:[1,3,0], specs:{Kasa:"40.5mm Çelik", Mekanizma:"Otomatik 4R35", Yıl:"2024", Kutu:"Tam set"}, desc:"Degrade lacivert kadran, sıfır ürün."},
+  {id:"w7", type:"saat", brand:"Casio", model:"G-Shock", name:"Casio G-Shock GA-2100 Carbon Core", priceUSD:99, condition:"Yeni", listedAt:"2025-06-21", qty:3, images:[2,1,0], specs:{Kasa:"45mm Reçine", Mekanizma:"Quartz", Yıl:"2024", Kutu:"Tam set"}, desc:"CasiOak. Dayanıklı, günlük kullanım için ideal."},
+  {id:"w8", type:"saat", brand:"Tag Heuer", model:"Carrera", name:"TAG Heuer Carrera Chronograph 44mm", priceUSD:3200, condition:"İyi", listedAt:"2025-06-21", qty:1, images:[3,0,1], specs:{Kasa:"44mm Çelik", Mekanizma:"Otomatik Calibre 16", Yıl:"2021", Kutu:"Sadece saat"}, desc:"Kronograf, panda kadran. Servis geçmişi mevcut."},
+  {id:"g1", type:"gozluk", brand:"Ray-Ban", model:"Aviator", name:"Ray-Ban Aviator Classic — Altın / G-15", priceUSD:165, condition:"Yeni", listedAt:"2025-06-24", qty:4, images:[0,1], specs:{Çerçeve:"Metal Altın", Cam:"G-15 Yeşil", Boyut:"58mm", Kutu:"Tam set"}, desc:"Klasik aviator, orijinal Ray-Ban kılıfı ve bezi ile."},
+  {id:"g2", type:"gozluk", brand:"Persol", model:"714", name:"Persol 714 Steve McQueen Katlanır", priceUSD:380, condition:"Çok iyi", listedAt:"2025-06-23", qty:1, images:[1,0], specs:{Çerçeve:"Asetat Havana", Cam:"Polarize Mavi", Boyut:"52mm", Kutu:"Tam set"}, desc:"İkonik katlanabilir model, az kullanılmış."},
+  {id:"g3", type:"gozluk", brand:"Gucci", model:"GG0061S", name:"Gucci GG0061S Oversized — Siyah", priceUSD:295, condition:"Yeni", listedAt:"2025-06-23", qty:2, images:[0,1], specs:{Çerçeve:"Asetat Siyah", Cam:"Gri Degrade", Boyut:"57mm", Kutu:"Tam set"}, desc:"Sıfır, web logolu sap detayı. Orijinal Gucci kutusu."},
+  {id:"g4", type:"gozluk", brand:"Oakley", model:"Holbrook", name:"Oakley Holbrook Prizm Polarize", priceUSD:185, condition:"Yeni", listedAt:"2025-06-22", qty:3, images:[1,0], specs:{Çerçeve:"O Matter Siyah", Cam:"Prizm Polarize", Boyut:"55mm", Kutu:"Tam set"}, desc:"Spor & günlük, Prizm teknolojisi. Sıfır."},
+  {id:"g5", type:"gozluk", brand:"Tom Ford", model:"Henry", name:"Tom Ford Henry FT0248 — Havana", priceUSD:340, condition:"Çok iyi", listedAt:"2025-06-22", qty:1, images:[0,1], specs:{Çerçeve:"Asetat Havana", Cam:"Kahve", Boyut:"53mm", Kutu:"Tam set"}, desc:"Yuvarlak çerçeve, T logosu mafsal. Temiz durumda."},
+  {id:"g6", type:"gozluk", brand:"Prada", model:"Linea Rossa", name:"Prada Linea Rossa PS54IS — Mat Siyah", priceUSD:260, condition:"Yeni", listedAt:"2025-06-21", qty:2, images:[1,0], specs:{Çerçeve:"Naylon Mat", Cam:"Gri", Boyut:"59mm", Kutu:"Tam set"}, desc:"Sıfır, sportif tasarım. Kırmızı şerit detay."}
+];
+
+let DATA = [];
+
+/* ---------- VERİ KATMANI (Sheets'e hazır) ---------- */
+async function loadData(){
+  if(CONFIG.USE_MOCK){
+    DATA = MOCK.map(p=>({...p, images:p.images.map((s)=>ph(s,p.type))}));
+    return;
+  }
+  // Google Sheets / Apps Script'ten çek
+  try{
+    const r = await fetch(CONFIG.SHEET_API + "?action=products");
+    const json = await r.json();
+    DATA = json.products.map(p=>({
+      ...p,
+      priceUSD:Number(p.priceUSD),
+      qty:Number(p.qty||1),
+      images:(p.images && p.images.length) ? p.images : [ph(0,p.type)],
+      specs:p.specs||{}
+    }));
+  }catch(e){
+    console.error("Sheets yüklenemedi:",e);
+    DATA = MOCK.map(p=>({...p, images:p.images.map((s)=>ph(s,p.type))}));
+    toast("Bağlantı yok — örnek veri gösteriliyor");
+  }
+}
+
+/* ---------- FİYAT ---------- */
+function fmt(usd){
+  if(state.cur==="USD") return "$"+Math.round(usd).toLocaleString("en-US");
+  return "₺"+Math.round(usd*CONFIG.USD_TRY).toLocaleString("tr-TR");
+}
+
+/* ---------- KART RENDER ---------- */
+function cardHTML(p,i){
+  const isFav = state.favs.has(p.id);
+  const fresh = p.listedAt >= "2025-06-23";
+  return `<article class="card" style="animation-delay:${i*40}ms" onclick="openDetail('${p.id}')">
+    <div class="ph-wrap">
+      <img class="ph" src="${p.images[0]}" alt="${p.name}" loading="lazy"/>
+      ${fresh?'<span class="badge">Yeni listelendi</span>':''}
+      <button class="fav ${isFav?'on':''}" onclick="event.stopPropagation();toggleFav('${p.id}',this)" aria-label="Favori">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.3-9C1 9 2.4 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.6 0 5 3.5 3.3 6.5C19 16.4 12 21 12 21z"/></svg>
+      </button>
+    </div>
+    <div class="info">
+      <div class="cond">${p.condition}</div>
+      <h3 class="nm">${p.name}</h3>
+      <div class="pr">${fmt(p.priceUSD)}</div>
+      <div class="brand-line">${p.brand} · ${p.qty} adet</div>
+    </div>
+  </article>`;
+}
+
+/* ---------- LİSTELEME ---------- */
+function visibleProducts(){
+  let list = DATA.slice();
+  if(state.cat!=="all") list = list.filter(p=>p.type===state.cat);
+  const f = state.filter;
+  if(f.brand) list = list.filter(p=>p.brand===f.brand);
+  if(f.condition) list = list.filter(p=>p.condition===f.condition);
+  if(f.max) list = list.filter(p=>p.priceUSD*(state.cur==="TRY"?CONFIG.USD_TRY:1) <= f.max);
+  if(f.favOnly) list = list.filter(p=>state.favs.has(p.id));
+  switch(state.sort){
+    case "low": list.sort((a,b)=>a.priceUSD-b.priceUSD);break;
+    case "high":list.sort((a,b)=>b.priceUSD-a.priceUSD);break;
+    case "new": list.sort((a,b)=>b.listedAt.localeCompare(a.listedAt));break;
+    case "old": list.sort((a,b)=>a.listedAt.localeCompare(b.listedAt));break;
+  }
+  return list;
+}
+
+function postHTML(p){
+  const fav = state.favs.has(p.id);
+  const dots = p.images.map((_,i)=>`<i class="${i===0?'on':''}"></i>`).join("");
+  const slides = p.images.map(src=>`<div class="pm-slide"><img src="${src}" alt="${p.name}"/></div>`).join("");
+  return `<article class="post" data-id="${p.id}">
+    <div class="post-media" data-id="${p.id}" onscroll="feedScroll(this)">${slides}</div>
+
+    <div class="post-top">
+      <div class="post-seller">
+        <div class="ps-av">E</div>
+        <div>
+          <div class="ps-name">ERSA</div>
+          <div class="ps-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+            Orijinal · Garantili
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="post-rail">
+      <button class="rail-btn ${fav?'on':''}" onclick="railFav('${p.id}',this)" aria-label="Favori">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.3-9C1 9 2.4 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.6 0 5 3.5 3.3 6.5C19 16.4 12 21 12 21z"/></svg>
+        <span>${fav?1:0}</span>
+      </button>
+      <button class="rail-btn" onclick="feedOffer('${p.id}')" aria-label="Sor">
+        <svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-5A8 8 0 1 1 21 12z"/></svg>
+        <span>Sor</span>
+      </button>
+      <button class="rail-btn" onclick="shareItem('${p.id}')" aria-label="Paylaş">
+        <svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7"/><path d="M12 16V3M7 8l5-5 5 5"/></svg>
+        <span>Paylaş</span>
+      </button>
+    </div>
+
+    <div class="post-bottom">
+      <div class="post-dots" id="dots-${p.id}">${dots}</div>
+      <div class="pb-cond">${p.condition} · ${p.brand}</div>
+      <div class="pb-title">${p.name}</div>
+      <div class="pb-row">
+        <span class="pb-price">${fmt(p.priceUSD)}</span>
+        <button class="pb-cta" onclick="openDetail('${p.id}')">İncele →</button>
+      </div>
+    </div>
+  </article>`;
+}
+
+function renderHome(){
+  // Öne çıkanlar akışı: önce premium/yeni parçalar
+  const list = DATA.slice().sort((a,b)=>{
+    const pa = a.priceUSD>1000?1:0, pb = b.priceUSD>1000?1:0;
+    if(pb-pa) return pb-pa;
+    return b.listedAt.localeCompare(a.listedAt);
+  });
+  const feed = document.getElementById("feed");
+  feed.innerHTML = list.map(postHTML).join("") +
+    `<div class="feed-hint">↑ kaydır</div>`;
+}
+
+function feedScroll(el){
+  const i = Math.round(el.scrollLeft / el.clientWidth);
+  const dots = document.getElementById("dots-"+el.dataset.id);
+  if(dots) [...dots.children].forEach((d,j)=>d.classList.toggle("on",j===i));
+}
+function railFav(id,el){
+  toggleFav(id);
+  const on = state.favs.has(id);
+  el.classList.toggle("on",on);
+  el.querySelector("span").textContent = on?1:0;
+}
+function feedOffer(id){
+  state.current = DATA.find(p=>p.id===id);
+  if(state.current) openOffer();
+}
+function shareItem(id){
+  const p = DATA.find(x=>x.id===id);
+  const data = {title:"ERSA · "+(p?p.name:""), text:p?`${p.name} — ${fmt(p.priceUSD)}`:"", url:location.href};
+  if(navigator.share){ navigator.share(data).catch(()=>{}); }
+  else toast("Paylaşım bağlantısı kopyalandı");
+}
+
+function renderShop(){
+  const list = visibleProducts();
+  const g = document.getElementById("shopGrid");
+  g.innerHTML = list.length ? list.map((p,i)=>cardHTML(p,i)).join("")
+    : `<div class="empty" style="grid-column:1/-1"><b>Sonuç yok</b>Filtreleri değiştirmeyi dene.</div>`;
+  document.getElementById("shopCount").textContent = list.length+" parça";
+  const heads={all:"Tüm Ürünler",saat:"Saatler",gozluk:"Gözlükler"};
+  document.getElementById("shopHead").textContent = heads[state.cat];
+  document.getElementById("filterApply").textContent = `${list.length} ürünü gör`;
+}
+
+function renderFavs(){
+  const list = DATA.filter(p=>state.favs.has(p.id));
+  document.getElementById("favGrid").innerHTML = list.length
+    ? list.map((p,i)=>cardHTML(p,i)).join("")
+    : `<div class="empty" style="grid-column:1/-1"><b>Henüz favori yok</b>Beğendiğin parçaları kalple işaretle.</div>`;
+  document.getElementById("favCount").textContent = list.length+" parça";
+}
+
+function renderAbout(){ document.getElementById("aboutTotal").textContent = DATA.length; }
+
+/* ---------- DETAY ---------- */
+function openDetail(id){
+  const p = DATA.find(x=>x.id===id); if(!p) return;
+  state.current = p; state.slide = 0;
+  document.getElementById("detailImg").src = p.images[0];
+  document.getElementById("detailDots").innerHTML = p.images.map((_,i)=>`<i class="${i===0?'on':''}" onclick="slideTo(${i})"></i>`).join("");
+  const specRows = Object.entries(p.specs).map(([k,v])=>`<div><div class="k">${k}</div><div class="v">${v}</div></div>`).join("");
+  document.getElementById("detailBody").innerHTML = `
+    <div class="price-row">
+      <span class="big-price">${fmt(p.priceUSD)}</span>
+      <button class="fav ${state.favs.has(p.id)?'on':''}" style="position:static;border:1px solid var(--line)" onclick="toggleFav('${p.id}',this)">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-9.3-9C1 9 2.4 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.6 0 5 3.5 3.3 6.5C19 16.4 12 21 12 21z"/></svg>
+      </button>
+    </div>
+    <h1 class="detail-title">${p.name}</h1>
+    <div class="brand-pill">Marka <b>${p.brand}</b></div>
+
+    <div class="lbl">Durum & Stok</div>
+    <div class="cond-opt">
+      <img class="thumb" src="${p.images[0]}"/>
+      <div>
+        <div class="nm">${p.condition}</div>
+        <div class="meta">${fmt(p.priceUSD)} · ${p.qty} adet mevcut</div>
+      </div>
+    </div>
+
+    <div class="spec-tabs">
+      <div class="spec-tab on" onclick="specTab(0,this)">Bilgi</div>
+      <div class="spec-tab" onclick="specTab(1,this)">Açıklama</div>
+      <div class="spec-tab" onclick="specTab(2,this)">Kargo</div>
+    </div>
+    <div class="spec-panel on">
+      <div class="spec-grid">
+        <div><div class="k">Marka</div><div class="v brass">${p.brand}</div></div>
+        <div><div class="k">Model</div><div class="v brass">${p.model}</div></div>
+        <div><div class="k">Kategori</div><div class="v">${p.type==="saat"?"Kol Saati":"Gözlük"}</div></div>
+        <div><div class="k">Durum</div><div class="v">${p.condition}</div></div>
+        ${specRows}
+      </div>
+    </div>
+    <div class="spec-panel"><p class="desc-text">${p.desc}</p></div>
+    <div class="spec-panel">
+      <div class="ship-row"><span class="k">Gönderim</span><span class="v">${CONFIG.FREE_SHIPPING?"Ücretsiz":"Alıcıya ait"}</span></div>
+      <div class="ship-row"><span class="k">Süre</span><span class="v">1–3 iş günü</span></div>
+      <div class="ship-row"><span class="k">İade</span><span class="v">3 gün içinde</span></div>
+      <div class="ship-row"><span class="k">ERSA koruması</span><span class="v">ERSA Güvence</span></div>
+    </div>`;
+  buildActionBar(p);
+  go("detail");
+}
+function slideTo(i){
+  const p=state.current; state.slide=i;
+  document.getElementById("detailImg").src=p.images[i];
+  document.querySelectorAll("#detailDots i").forEach((d,j)=>d.classList.toggle("on",j===i));
+}
+function specTab(i,el){
+  document.querySelectorAll(".spec-tab").forEach(t=>t.classList.remove("on"));
+  el.classList.add("on");
+  document.querySelectorAll(".spec-panel").forEach((pn,j)=>pn.classList.toggle("on",j===i));
+}
+function buildActionBar(p){
+  const ab=document.getElementById("actionBar");
+  ab.innerHTML = `
+    <div class="ab-top">
+      <span class="meta">${p.condition} · ${p.brand}</span>
+      <span class="pr">${fmt(p.priceUSD)}</span>
+    </div>
+    <div class="ab-btns">
+      <button class="btn btn-ghost" onclick="openOffer()">Teklif ver</button>
+      <button class="btn btn-outline" onclick="addToCart('${p.id}')">Sepete ekle</button>
+    </div>
+    <button class="btn btn-solid btn-block" onclick="buyNow('${p.id}')">Hemen al</button>`;
+}
+function backFromDetail(){ go(state.prevView||"shop"); }
+
+/* ---------- FAVORİ ---------- */
+function toggleFav(id,el){
+  if(state.favs.has(id)){state.favs.delete(id);el&&el.classList.remove("on");}
+  else{state.favs.add(id);el&&el.classList.add("on");}
+  localStorage.setItem("ersa_favs",JSON.stringify([...state.favs]));
+  if(state.view==="favs") renderFavs();
+}
+
+/* ---------- SEPET ---------- */
+function saveCart(){ localStorage.setItem("ersa_cart",JSON.stringify(state.cart)); updateCartBadge(); }
+function addToCart(id){
+  if(!state.cart.includes(id)) state.cart.push(id);
+  saveCart(); toast("Sepete eklendi"); 
+}
+function buyNow(id){ addToCart(id); go("cart"); }
+function updateCartBadge(){
+  const b=document.getElementById("cartCount");
+  if(state.cart.length){b.hidden=false;b.textContent=state.cart.length;}
+  else b.hidden=true;
+}
+function removeCart(id){ state.cart=state.cart.filter(x=>x!==id); saveCart(); renderCart(); }
+
+function renderCart(){
+  const items = state.cart.map(id=>DATA.find(p=>p.id===id)).filter(Boolean);
+  const body=document.getElementById("cartBody");
+  if(!items.length){
+    body.innerHTML=`<div class="empty"><b>Sepetin boş</b>Koleksiyondan bir parça ekle.</div>
+      <button class="btn btn-outline btn-full" onclick="go('shop')">Mağazaya git</button>`;
+    return;
+  }
+  let sub = items.reduce((s,p)=>s+p.priceUSD,0);
+  const ins = state.insurance ? CONFIG.INSURANCE_PRICE_USD : 0;
+  const total = sub+ins;
+  body.innerHTML = `
+    <div class="notice">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex:0 0 auto"><path d="M20 6L9 17l-5-5"/></svg>
+      <span>Sipariş vererek ERSA satış ve iade koşullarını kabul etmiş olursun.</span>
+    </div>
+    <div class="lbl" style="margin-top:20px">Teslimat adresi</div>
+    <div class="add-addr" onclick="toast('Adres formu canlıda eklenecek')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+      Adres ekle
+    </div>
+    <div class="lbl" style="margin-top:24px">Sipariş</div>
+    ${items.map(p=>`
+      <div class="co-line">
+        <img class="th" src="${p.images[0]}"/>
+        <div><div class="nm">${p.name}</div><div class="meta">${p.condition} · ${p.brand} · 1 adet</div></div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;justify-content:center">
+          <div class="pr">${fmt(p.priceUSD)}</div>
+          <button onclick="removeCart('${p.id}')" style="color:var(--danger);font-size:12px;margin-top:4px">Kaldır</button>
+        </div>
+      </div>`).join("")}
+    <div class="protect">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--brass)" stroke-width="1.8" style="flex:0 0 auto"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>
+      <div style="flex:1">
+        <div style="font-weight:700">Alışverişini güvenceye al</div>
+        <div style="font-size:12.5px;color:var(--muted)">ERSA Güvence · ${fmt(CONFIG.INSURANCE_PRICE_USD)}</div>
+      </div>
+      <div class="toggle ${state.insurance?'on':''}" onclick="toggleIns()"></div>
+    </div>
+    <div class="total-row" style="border-top:1px solid var(--line)">
+      <span class="lbl2">Toplam</span><span class="amt">${fmt(total)}</span>
+    </div>
+    <button class="btn btn-solid btn-full" style="margin-top:18px" onclick="checkout()">Siparişi tamamla</button>`;
+}
+function toggleIns(){ state.insurance=!state.insurance; renderCart(); }
+async function checkout(){
+  toast("Sipariş gönderiliyor…");
+  const items = state.cart.map(id=>DATA.find(p=>p.id===id)).filter(Boolean);
+  const payload = { action:"order", items:items.map(p=>({id:p.id,name:p.name,priceUSD:p.priceUSD})),
+    insurance:state.insurance, currency:state.cur, ts:new Date().toISOString() };
+  if(!CONFIG.USE_MOCK){
+    try{ await fetch(CONFIG.SHEET_API,{method:"POST",body:JSON.stringify(payload)}); }catch(e){}
+  }
+  setTimeout(()=>{
+    state.cart=[]; state.insurance=false; saveCart();
+    toast("Sipariş alındı ✓ En kısa sürede dönüş yapılacak");
+    go("home");
+  },700);
+}
+
+/* ---------- TEKLİF ---------- */
+function openOffer(){
+  const p=state.current;
+  state.tmpOffer={type:null};
+  document.getElementById("offerBody").innerHTML = `
+    <div class="co-line" style="border:none;padding-top:0">
+      <img class="th" src="${p.images[0]}"/>
+      <div><div class="nm">${p.name}</div><div class="meta">${p.condition} · ${p.brand}</div>
+      <div class="pr" style="margin-top:4px;color:var(--brass)">${fmt(p.priceUSD)}</div></div>
+    </div>
+    <p style="color:var(--muted);font-size:13.5px;margin:6px 0 0">En az bir seçenek belirle. İkisini de seçersen paket teklif olur.</p>
+    <div class="offer-grid">
+      <div class="offer-opt" data-otype="trade" onclick="pickOffer('trade',this)">
+        <svg viewBox="0 0 24 24"><path d="M7 7h11l-3-3M17 17H6l3 3"/></svg>
+        <div class="t">Takas teklifi</div>
+      </div>
+      <div class="offer-opt" data-otype="cash" onclick="pickOffer('cash',this)">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/></svg>
+        <div class="t">Nakit teklif</div>
+      </div>
+    </div>
+    <div id="offerDyn"></div>`;
+  openSheet("sheetOffer");
+}
+function pickOffer(type,el){
+  el.classList.toggle("on");
+  const active=[...document.querySelectorAll(".offer-opt.on")].map(e=>e.dataset.otype);
+  state.tmpOffer.type=active;
+  const dyn=document.getElementById("offerDyn");
+  let html="";
+  if(active.includes("cash")){
+    html+=`<div class="field"><label>Nakit teklifin</label>
+      <input class="mono" id="offerCash" inputmode="numeric" placeholder="${fmt(Math.round(state.current.priceUSD*0.9))}"/></div>`;
+  }
+  if(active.includes("trade")){
+    html+=`<div class="field"><label>Takas etmek istediğin ürün</label>
+      <textarea id="offerTrade" rows="3" placeholder="Marka, model, durum…"></textarea></div>`;
+  }
+  if(active.length){
+    html+=`<div class="field"><label>Not (opsiyonel)</label>
+      <textarea id="offerNote" rows="2" placeholder="Eklemek istediklerin…"></textarea></div>`;
+  }
+  dyn.innerHTML=html;
+}
+async function sendOffer(){
+  const t=state.tmpOffer.type;
+  if(!t||!t.length){ toast("En az bir teklif türü seç"); return; }
+  const payload={action:"offer", productId:state.current.id, types:t,
+    cash:document.getElementById("offerCash")?.value||null,
+    trade:document.getElementById("offerTrade")?.value||null,
+    note:document.getElementById("offerNote")?.value||null,
+    ts:new Date().toISOString()};
+  if(!CONFIG.USE_MOCK){ try{ await fetch(CONFIG.SHEET_API,{method:"POST",body:JSON.stringify(payload)});}catch(e){} }
+  closeSheet();
+  toast("Teklifin gönderildi ✓");
+}
+
+/* ---------- SIRALA / FİLTRE SHEET ---------- */
+const SORTS=[["new","En yeni → en eski"],["old","En eski → en yeni"],["low","Fiyat (artan)"],["high","Fiyat (azalan)"]];
+function openSort(){
+  state.tmpSort=state.sort;
+  document.getElementById("sortBody").innerHTML = SORTS.map(([k,l])=>`
+    <div class="opt-row ${state.sort===k?'on':''}" data-sort="${k}" onclick="pickSort('${k}',this)">
+      <span class="label">${l}</span><span class="rb"></span></div>`).join("");
+  openSheet("sheetSort");
+}
+function pickSort(k,el){
+  state.tmpSort=k;
+  document.querySelectorAll("#sortBody .opt-row").forEach(r=>r.classList.toggle("on",r===el));
+}
+function applySort(){ state.sort=state.tmpSort; document.getElementById("sortBtn").classList.toggle("active",state.sort!=="new"); closeSheet(); renderShop(); }
+
+let filterStep="root";
+function openFilter(){
+  state.tmpFilter=JSON.parse(JSON.stringify(state.filter));
+  filterStep="root"; renderFilterRoot(); openSheet("sheetFilter");
+}
+function renderFilterRoot(){
+  const f=state.tmpFilter;
+  const active = f.brand||f.condition||f.max||f.favOnly;
+  document.getElementById("filterBody").innerHTML = `
+    <p style="color:var(--muted);font-size:13.5px;margin:4px 0 8px">${active?'Filtreler uygulanıyor':'Tüm ürünler gösteriliyor'}</p>
+    <div class="filt-row" onclick="filterSub('brand')"><span>Marka</span><span class="chev">${f.brand||'›'}</span></div>
+    <div class="filt-row" onclick="filterSub('condition')"><span>Durum</span><span class="chev">${f.condition||'›'}</span></div>
+    <div class="filt-row" onclick="filterSub('price')"><span>Fiyat aralığı</span><span class="chev">${f.max?fmt(f.max/(state.cur==='TRY'?CONFIG.USD_TRY:1)):'›'}</span></div>
+    <div class="filt-row" style="border:none"><span>Sadece favoriler</span>
+      <div class="toggle ${f.favOnly?'on':''}" onclick="event.stopPropagation();state.tmpFilter.favOnly=!state.tmpFilter.favOnly;renderFilterRoot()"></div></div>`;
+}
+function filterSub(kind){
+  const f=state.tmpFilter;
+  let opts=[];
+  if(kind==="brand"){ opts=[...new Set(DATA.filter(p=>state.cat==='all'||p.type===state.cat).map(p=>p.brand))]; }
+  if(kind==="condition"){ opts=["Yeni","Çok iyi","İyi"]; }
+  if(kind==="price"){ opts=[200,500,1000,3000,10000]; }
+  const cur = kind==="brand"?f.brand : kind==="condition"?f.condition : null;
+  document.getElementById("filterBody").innerHTML = `
+    <div class="filt-row" style="border:none;cursor:pointer" onclick="renderFilterRoot()">
+      <span style="color:var(--brass)">‹ Geri</span></div>
+    ${opts.map(o=>{
+      const label = kind==="price" ? "≤ "+fmt(o) : o;
+      const on = kind==="price" ? f.max===o*(state.cur==='TRY'?CONFIG.USD_TRY:1) : cur===o;
+      return `<div class="opt-row ${on?'on':''}" onclick="setFilter('${kind}','${o}',this)">
+        <span class="label">${label}</span><span class="rb"></span></div>`;
+    }).join("")}`;
+}
+function setFilter(kind,val){
+  const f=state.tmpFilter;
+  if(kind==="brand") f.brand = f.brand===val?null:val;
+  if(kind==="condition") f.condition = f.condition===val?null:val;
+  if(kind==="price"){ const v=Number(val)*(state.cur==='TRY'?CONFIG.USD_TRY:1); f.max = f.max===v?null:v; }
+  renderFilterRoot();
+}
+function applyFilter(){
+  state.filter=JSON.parse(JSON.stringify(state.tmpFilter));
+  const active = state.filter.brand||state.filter.condition||state.filter.max||state.filter.favOnly;
+  document.getElementById("filterBtn").classList.toggle("active",!!active);
+  closeSheet(); renderShop();
+}
+function resetFilter(){ state.tmpFilter={brand:null,condition:null,max:null,favOnly:false}; renderFilterRoot(); }
+
+/* ---------- SHEET kontrol ---------- */
+function openSheet(id){ document.getElementById("scrim").classList.add("on"); document.getElementById(id).classList.add("on"); }
+function closeSheet(){ document.getElementById("scrim").classList.remove("on");
+  document.querySelectorAll(".sheet").forEach(s=>s.classList.remove("on")); }
+
+/* ---------- ARAMA ---------- */
+function renderSearch(q){
+  q=(q||"").trim().toLowerCase();
+  const list = q ? DATA.filter(p=>(p.name+p.brand+p.model).toLowerCase().includes(q)) : DATA;
+  document.getElementById("searchGrid").innerHTML = list.length
+    ? list.map((p,i)=>cardHTML(p,i)).join("")
+    : `<div class="empty" style="grid-column:1/-1"><b>Bulunamadı</b>Başka bir kelime dene.</div>`;
+}
+
+/* ---------- BİLDİRİM ---------- */
+const NOTIFS=[
+  ["E","Rolex Datejust 36 yeniden listelendi — kaçırmadan göz at.","19 saat önce"],
+  ["E","Yeni gelen: Tissot PRX Powermatic 80 mavi. Sınırlı stok.","1 gün önce"],
+  ["E","Ray-Ban Aviator stoğu güncellendi.","2 gün önce"],
+  ["E","Persol 714 Steve McQueen tek adet kaldı.","3 gün önce"]
+];
+function renderNotif(){
+  document.getElementById("notifList").innerHTML = NOTIFS.map(([a,b,t])=>`
+    <div class="notif"><div class="av">${a}</div>
+      <div><div class="body">${b}</div><div class="time">${t}</div></div></div>`).join("");
+  document.querySelector('[data-nav="notif"] .dot')?.remove();
+}
+
+/* ---------- NAVİGASYON ---------- */
+function go(view){
+  if(["home","shop","favs","detail","search","cart","notif","about"].includes(view)){
+    if(view!=="detail" && state.view!=="detail") state.prevView=state.view;
+    if(state.view==="detail" && view==="detail"){} else if(view==="detail") state.prevView=state.view;
+  }
+  state.view=view;
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("on"));
+  document.getElementById("view-"+view).classList.add("on");
+  document.getElementById("actionBar").classList.toggle("on",view==="detail");
+  document.getElementById("app").classList.toggle("feed-mode",view==="home");
+  // tab senkron
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.dataset.view===view));
+  // bottom nav senkron
+  const navMap={home:"home",shop:"home",favs:"home",about:"about",search:"search",cart:"cart",notif:"notif"};
+  document.querySelectorAll(".nav-item").forEach(n=>n.classList.toggle("on",n.dataset.nav===navMap[view]));
+  // render
+  if(view==="home")renderHome();
+  if(view==="shop")renderShop();
+  if(view==="favs")renderFavs();
+  if(view==="about")renderAbout();
+  if(view==="cart")renderCart();
+  if(view==="notif")renderNotif();
+  if(view==="search")renderSearch(document.getElementById("searchInput").value);
+  window.scrollTo({top:0,behavior:"instant"});
+}
+
+/* ---------- TOAST ---------- */
+let toastT;
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg; t.classList.add("on");
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("on"),2200);
+}
+
+/* ---------- OLAY BAĞLAMA ---------- */
+function bind(){
+  document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>go(t.dataset.view));
+  document.querySelectorAll(".nav-item").forEach(n=>n.onclick=()=>go(n.dataset.nav));
+  document.querySelectorAll("#chips .chip").forEach(c=>c.onclick=()=>{
+    document.querySelectorAll("#chips .chip").forEach(x=>x.classList.remove("on"));
+    c.classList.add("on"); state.cat=c.dataset.cat; renderShop();
+  });
+  document.getElementById("sortBtn").onclick=openSort;
+  document.getElementById("filterBtn").onclick=openFilter;
+  document.getElementById("currToggle").querySelectorAll("button").forEach(b=>b.onclick=()=>{
+    state.cur=b.dataset.cur;
+    document.querySelectorAll("#currToggle button").forEach(x=>x.classList.toggle("on",x===b));
+    rerenderAll();
+  });
+  document.getElementById("searchInput").addEventListener("input",e=>renderSearch(e.target.value));
+}
+function rerenderAll(){
+  if(state.view==="home")renderHome();
+  if(state.view==="shop")renderShop();
+  if(state.view==="favs")renderFavs();
+  if(state.view==="cart")renderCart();
+  if(state.view==="search")renderSearch(document.getElementById("searchInput").value);
+  if(state.view==="detail"&&state.current)openDetail(state.current.id);
+}
+
+/* ---------- BAŞLAT ---------- */
+async function init(){
+  await loadData();
+  bind();
+  updateCartBadge();
+  renderHome();
+  document.getElementById("app").classList.add("feed-mode");
+  document.getElementById("app").hidden=false;
+  setTimeout(()=>{ document.getElementById("splash").classList.add("hide"); },1100);
+}
+init();
+
+/* ---------- SERVICE WORKER (PWA) ---------- */
+if("serviceWorker" in navigator){
+  window.addEventListener("load",()=>{
+    navigator.serviceWorker.register("sw.js").catch(()=>{});
+  });
+}
+
+</script>
+</body>
+</html>
