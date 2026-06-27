@@ -380,9 +380,62 @@ img{display:block;max-width:100%}
 
 @media (max-width:380px){.grid{gap:12px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ---- HESABIM ---- */
+.ac-menu{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.ac-row{display:flex;align-items:center;gap:14px;width:100%;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:16px;font-size:15px;font-weight:600;color:var(--ink);text-align:left}
+.ac-row .ac-ic{font-size:18px}.ac-row .ac-t{flex:1}.ac-row .ac-ar{color:var(--muted);font-size:20px}
+.ac-row.danger{color:#C0392B}
+.ac-row:active{scale:.99}
+.ac-sub-head{display:flex;align-items:center;gap:10px;margin:16px 0 12px}
+.ac-sub-head h3{margin:0;font-size:18px;font-weight:700;color:var(--ink)}
+.ac-bk{color:var(--orange);font-weight:700;font-size:14px;background:none;border:none}
+.ac-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:10px}
+.ac-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.ac-date{font-size:12px;color:var(--muted)}
+.ac-stat{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;background:#FBE6E9;color:var(--orange)}
+.ac-stat.s-Onaylandı,.ac-stat.s-Kabul,.ac-stat.s-Kargolandı,.ac-stat.s-Tamamlandı{background:#E9F7EE;color:#168a44}
+.ac-stat.s-İptal,.ac-stat.s-Red{background:#FDECEC;color:#C0392B}
+.ac-card-name{font-size:14.5px;font-weight:600;color:var(--ink)}
+.ac-card-amt{font-weight:700;font-size:16px;color:var(--ink);margin-top:4px}
+.ac-empty,.ac-load{color:var(--muted);font-size:14px;text-align:center;padding:30px 0}
+.ac-info{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 16px}
+.ac-info-row{display:flex;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.ac-info-row:last-child{border:none}.ac-info-row .k{color:var(--muted)}.ac-info-row .v{font-weight:600;color:var(--ink)}
+
+/* ---- GİRİŞ (kapalı portal) ---- */
+#login{position:fixed;inset:0;z-index:100;background:var(--bg);display:none;align-items:center;justify-content:center;padding:24px}
+#login.on{display:flex}
+.login-card{width:100%;max-width:360px;text-align:center}
+.login-logo{width:70px;height:70px;border-radius:18px;background:#0E0E10;color:#fff;display:grid;place-items:center;
+  font-weight:800;font-size:26px;margin:0 auto 18px;letter-spacing:-1px}
+.login-card h1{margin:0 0 4px;font-size:23px;font-weight:700;color:var(--ink)}
+.login-card p{margin:0 0 24px;color:var(--muted);font-size:14px}
+.login-field{text-align:left;margin-bottom:14px}
+.login-field label{display:block;font-size:12.5px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.login-field input{width:100%;border:1.5px solid var(--line-2,#E1E0E6);border-radius:12px;padding:14px;font-size:16px;color:var(--ink);background:var(--card)}
+.login-field input:focus{outline:none;border-color:var(--orange)}
+.login-btn{width:100%;background:var(--grad);color:#fff;font-weight:700;font-size:16px;border:none;border-radius:30px;padding:15px;margin-top:6px}
+.login-btn:active{scale:.98}
+.login-err{color:#C0392B;font-size:13.5px;font-weight:600;min-height:18px;margin-top:12px}
+.login-foot{color:var(--faint,#C9C7D1);font-size:12px;margin-top:20px}
 </style>
 </head>
 <body>
+
+<!-- GİRİŞ (kapalı portal) -->
+<div id="login">
+  <div class="login-card">
+    <div class="login-logo">Q8</div>
+    <h1>Q8 Portal</h1>
+    <p>Devam etmek için giriş yap</p>
+    <div class="login-field"><label>Kullanıcı kodu</label><input id="loginKod" autocomplete="username" placeholder="ör: BAYI01"/></div>
+    <div class="login-field"><label>Şifre</label><input id="loginSifre" type="password" autocomplete="current-password" placeholder="••••"/></div>
+    <button class="login-btn" id="loginBtn">Giriş</button>
+    <div class="login-err" id="loginErr"></div>
+    <div class="login-foot">Giriş bilgisi için yetkiliyle iletişime geçin.</div>
+  </div>
+</div>
 
 <!-- SPLASH -->
 <div id="splash">
@@ -399,16 +452,11 @@ img{display:block;max-width:100%}
         <span class="wm">Q8<sup>®</sup></span>
         <span class="tag">Saat · Gözlük</span>
       </div>
-      <div class="curr-toggle" id="currToggle">
-        <button data-cur="TRY" class="on">₺ TL</button>
-        <button data-cur="USD">$ USD</button>
-      </div>
     </div>
     <nav class="tabs" id="tabs">
       <button class="tab on" data-view="home">Öne Çıkanlar</button>
       <button class="tab" data-view="shop">Mağaza</button>
       <button class="tab" data-view="favs">Favoriler</button>
-      <button class="tab" data-view="about">Hakkında</button>
     </nav>
   </header>
 
@@ -446,32 +494,18 @@ img{display:block;max-width:100%}
     <div class="grid" id="favGrid"></div>
   </section>
 
-  <!-- HAKKINDA -->
+  <!-- HESABIM -->
   <section class="view" id="view-about">
     <div class="prof-grad">
       <div class="profile-head">
-        <div class="av">E</div>
+        <div class="av" id="acAv">Q</div>
         <div>
-          <div class="nm">Q8</div>
-          <div class="sub">Saat & Gözlük · Türkiye / Çin</div>
+          <div class="nm" id="acName">Hesabım</div>
+          <div class="sub" id="acKod">—</div>
         </div>
       </div>
     </div>
-    <div class="stat-card">
-      <div class="stat-top">
-        <div class="s"><div class="n" id="aboutTotal">0</div><div class="k">Ürün</div></div>
-        <div class="s"><div class="n">5.0★</div><div class="k">Puan</div></div>
-        <div class="s"><div class="n">%100</div><div class="k">Orijinal</div></div>
-      </div>
-      <div class="stat-row"><span>Kargo</span><span class="v">Türkiye geneli ücretsiz</span></div>
-      <div class="stat-row"><span>İade</span><span class="v">3 gün içinde</span></div>
-      <div class="stat-row"><span>Ödeme</span><span class="v">Havale / EFT · Kapıda</span></div>
-    </div>
-    <div class="about-card">
-      <p>Q8, tek tek seçilmiş saat ve gözlükleri doğrudan alıcıyla buluşturan bağımsız bir koleksiyondur. Pazaryeri değil — her parça bizzat kontrol edilir, listelenir ve gönderilir.</p>
-      <p>Soru, teklif ya da özel istek için doğrudan yazabilirsiniz.</p>
-      <p><a href="#" onclick="toast('İletişim entegrasyonu canlıda eklenecek');return false">WhatsApp ile yaz →</a></p>
-    </div>
+    <div id="acContent" style="padding:0 16px"></div>
   </section>
 
   <!-- DETAIL -->
@@ -536,7 +570,7 @@ img{display:block;max-width:100%}
       <span class="dot" style="position:absolute;top:6px;right:calc(50% - 16px);width:8px;height:8px;border-radius:50%;background:var(--red)"></span>
     </button>
     <button class="nav-item" data-nav="about">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profil
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Hesabım
     </button>
   </nav>
 </div>
@@ -591,7 +625,7 @@ const state = {
   cat:"all",
   sort:"new",
   filter:{ brand:null, condition:null, max:null, favOnly:false },
-  cur:"TRY",
+  cur:"USD",
   favs:new Set(JSON.parse(localStorage.getItem("q8_favs")||"[]")),
   cart:JSON.parse(localStorage.getItem("q8_cart")||"[]"),
   current:null, slide:0,
@@ -657,8 +691,7 @@ async function loadData(){
 
 /* ---------- FİYAT ---------- */
 function fmt(usd){
-  if(state.cur==="USD") return "$"+Math.round(usd).toLocaleString("en-US");
-  return "₺"+Math.round(usd*CONFIG.USD_TRY).toLocaleString("tr-TR");
+  return "$"+Math.round(Number(usd)||0).toLocaleString("en-US");
 }
 
 /* ---------- KART RENDER ---------- */
@@ -800,7 +833,58 @@ function renderFavs(){
   document.getElementById("favCount").textContent = list.length+" parça";
 }
 
-function renderAbout(){ document.getElementById("aboutTotal").textContent = DATA.length; }
+function renderAbout(){ renderAccount(); }
+function renderAccount(){
+  const u=getUser()||{kod:"",ad:""};
+  document.getElementById("acAv").textContent=(u.kod||"Q").slice(0,1).toUpperCase();
+  document.getElementById("acName").textContent=u.ad||u.kod||"Hesabım";
+  document.getElementById("acKod").textContent=u.kod?("Kod: "+u.kod):"—";
+  accountMenu();
+}
+function accountMenu(){
+  document.getElementById("acContent").innerHTML=`
+    <div class="ac-menu">
+      <button class="ac-row" onclick="showMyOrders()"><span class="ac-ic">🧾</span><span class="ac-t">Siparişlerim</span><span class="ac-ar">›</span></button>
+      <button class="ac-row" onclick="showMyOffers()"><span class="ac-ic">🏷️</span><span class="ac-t">Tekliflerim</span><span class="ac-ar">›</span></button>
+      <button class="ac-row" onclick="showAccountInfo()"><span class="ac-ic">👤</span><span class="ac-t">Hesap bilgilerim</span><span class="ac-ar">›</span></button>
+      <button class="ac-row danger" onclick="logout()"><span class="ac-ic">⎋</span><span class="ac-t">Çıkış yap</span><span class="ac-ar">›</span></button>
+    </div>`;
+}
+function acBack(){ accountMenu(); }
+function acHead(title){ return `<div class="ac-sub-head"><button class="ac-bk" onclick="acBack()">‹ Geri</button><h3>${title}</h3></div>`; }
+async function showMyOrders(){
+  const u=getUser()||{}; document.getElementById("acContent").innerHTML=acHead("Siparişlerim")+`<div class="ac-load">Yükleniyor…</div>`;
+  let rows=[];
+  try{ const r=await fetch(CONFIG.SHEET_API,{method:"POST",body:JSON.stringify({action:"my_orders",kod:u.kod})}); const j=await r.json(); rows=(j&&j.orders)||[]; }catch(e){}
+  const body = rows.length? rows.slice().reverse().map(o=>`
+    <div class="ac-card">
+      <div class="ac-card-top"><span class="ac-date">${esc(o.Tarih||"")}</span><span class="ac-stat s-${esc(String(o.Durum||"").trim())}">${esc(o.Durum||"Yeni")}</span></div>
+      <div class="ac-card-name">${esc(o.Urunler||"—")}</div>
+      <div class="ac-card-amt">${fmt(o.TutarUSD)}</div>
+    </div>`).join("") : `<div class="ac-empty">Henüz siparişin yok.</div>`;
+  document.getElementById("acContent").innerHTML=acHead("Siparişlerim")+body;
+}
+async function showMyOffers(){
+  const u=getUser()||{}; document.getElementById("acContent").innerHTML=acHead("Tekliflerim")+`<div class="ac-load">Yükleniyor…</div>`;
+  let rows=[];
+  try{ const r=await fetch(CONFIG.SHEET_API,{method:"POST",body:JSON.stringify({action:"my_offers",kod:u.kod})}); const j=await r.json(); rows=(j&&j.offers)||[]; }catch(e){}
+  const body = rows.length? rows.slice().reverse().map(o=>`
+    <div class="ac-card">
+      <div class="ac-card-top"><span class="ac-date">${esc(o.Tarih||"")}</span><span class="ac-stat s-${esc(String(o.Durum||"").trim())}">${esc(o.Durum||"Yeni")}</span></div>
+      <div class="ac-card-name">${esc(o.Urun||o.UrunID||"—")}</div>
+      <div class="ac-card-amt">${o.NakitTeklif?("$"+esc(o.NakitTeklif)):(esc(o.Turler||"—"))}</div>
+    </div>`).join("") : `<div class="ac-empty">Henüz teklifin yok.</div>`;
+  document.getElementById("acContent").innerHTML=acHead("Tekliflerim")+body;
+}
+function showAccountInfo(){
+  const u=getUser()||{};
+  document.getElementById("acContent").innerHTML=acHead("Hesap bilgilerim")+`
+    <div class="ac-info">
+      <div class="ac-info-row"><span class="k">Kod</span><span class="v">${esc(u.kod||"—")}</span></div>
+      <div class="ac-info-row"><span class="k">Ad / Firma</span><span class="v">${esc(u.ad||"—")}</span></div>
+    </div>`;
+}
+function logout(){ try{localStorage.removeItem("q8_user");}catch(e){} location.reload(); }
 
 /* ---------- DETAY ---------- */
 function openDetail(id){
@@ -947,8 +1031,9 @@ function toggleIns(){ state.insurance=!state.insurance; renderCart(); }
 async function checkout(){
   toast("Sipariş gönderiliyor…");
   const items = state.cart.map(id=>DATA.find(p=>p.id===id)).filter(Boolean);
+  const u=getUser()||{};
   const payload = { action:"order", items:items.map(p=>({id:p.id,name:p.name,priceUSD:p.priceUSD})),
-    insurance:state.insurance, currency:state.cur, ts:new Date().toISOString() };
+    insurance:state.insurance, currency:"USD", kod:u.kod||"", customer:u.ad||"", ts:new Date().toISOString() };
   if(!CONFIG.USE_MOCK){
     try{ await fetch(CONFIG.SHEET_API,{method:"POST",body:JSON.stringify(payload)}); }catch(e){}
   }
@@ -1006,11 +1091,12 @@ function pickOffer(type,el){
 async function sendOffer(){
   const t=state.tmpOffer.type;
   if(!t||!t.length){ toast("En az bir teklif türü seç"); return; }
+  const u=getUser()||{};
   const payload={action:"offer", productId:state.current.id, types:t,
     cash:document.getElementById("offerCash")?.value||null,
     trade:document.getElementById("offerTrade")?.value||null,
     note:document.getElementById("offerNote")?.value||null,
-    ts:new Date().toISOString()};
+    kod:u.kod||"", customer:u.ad||"", ts:new Date().toISOString()};
   if(!CONFIG.USE_MOCK){ try{ await fetch(CONFIG.SHEET_API,{method:"POST",body:JSON.stringify(payload)});}catch(e){} }
   closeSheet();
   toast("Teklifin gönderildi ✓");
@@ -1152,11 +1238,6 @@ function bind(){
   });
   document.getElementById("sortBtn").onclick=openSort;
   document.getElementById("filterBtn").onclick=openFilter;
-  document.getElementById("currToggle").querySelectorAll("button").forEach(b=>b.onclick=()=>{
-    state.cur=b.dataset.cur;
-    document.querySelectorAll("#currToggle button").forEach(x=>x.classList.toggle("on",x===b));
-    rerenderAll();
-  });
   document.getElementById("searchInput").addEventListener("input",e=>renderSearch(e.target.value));
 }
 function rerenderAll(){
@@ -1168,17 +1249,50 @@ function rerenderAll(){
   if(state.view==="detail"&&state.current)openDetail(state.current.id);
 }
 
-/* ---------- BAŞLAT ---------- */
-async function init(){
+/* ---------- GİRİŞ / BAŞLAT (kapalı portal) ---------- */
+function getUser(){ try{ return JSON.parse(localStorage.getItem("q8_user")||"null"); }catch(e){ return null; } }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+async function startApp(){
   await loadData();
   bind();
   updateCartBadge();
   renderHome();
   document.getElementById("app").classList.add("feed-mode");
   document.getElementById("app").hidden=false;
-  setTimeout(()=>{ document.getElementById("splash").classList.add("hide"); },1100);
+  setTimeout(()=>{ document.getElementById("splash").classList.add("hide"); },700);
 }
-init();
+function showLogin(){
+  document.getElementById("splash").classList.add("hide");
+  document.getElementById("app").hidden=true;
+  document.getElementById("login").classList.add("on");
+  setTimeout(()=>{ const k=document.getElementById("loginKod"); if(k) k.focus(); },200);
+}
+async function doLogin(){
+  const kod=document.getElementById("loginKod").value.trim();
+  const sifre=document.getElementById("loginSifre").value;
+  const err=document.getElementById("loginErr"); err.textContent="";
+  if(!kod||!sifre){ err.textContent="Kod ve şifre gir"; return; }
+  const btn=document.getElementById("loginBtn"); btn.textContent="Kontrol ediliyor…"; btn.disabled=true;
+  let j=null;
+  try{ const r=await fetch(CONFIG.SHEET_API,{method:"POST",body:JSON.stringify({action:"login",kod,sifre})}); j=await r.json(); }
+  catch(e){ err.textContent="Bağlantı hatası — tekrar dene"; btn.textContent="Giriş"; btn.disabled=false; return; }
+  if(!j||!j.ok){ err.textContent=(j&&j.error)||"Giriş başarısız"; btn.textContent="Giriş"; btn.disabled=false; return; }
+  localStorage.setItem("q8_user",JSON.stringify(j.user||{kod}));
+  btn.textContent="Giriş"; btn.disabled=false;
+  document.getElementById("login").classList.remove("on");
+  document.getElementById("splash").classList.remove("hide");
+  await startApp();
+}
+
+async function boot(){
+  if(getUser()){ await startApp(); }
+  else { showLogin(); }
+}
+document.getElementById("loginBtn").onclick=doLogin;
+document.getElementById("loginSifre").addEventListener("keydown",e=>{ if(e.key==="Enter") doLogin(); });
+document.getElementById("loginKod").addEventListener("keydown",e=>{ if(e.key==="Enter") document.getElementById("loginSifre").focus(); });
+boot();
 
 /* ---------- SERVICE WORKER (PWA) ---------- */
 if("serviceWorker" in navigator){

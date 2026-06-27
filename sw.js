@@ -1,5 +1,5 @@
 /* Q8 PWA service worker */
-const CACHE = "q8-v3";
+const CACHE = "q8-v4";
 const ASSETS = ["./", "./index.html", "./manifest.json"];
 
 self.addEventListener("install", (e) => {
